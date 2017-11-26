@@ -150,10 +150,8 @@ export default {
     },
     updateData () {
       if (this.needUpdate) {
-        console.log(this.resetUpdate)
+        // console.log(this.resetUpdate)
         this.$store.dispatch('resetUpdate')
-      } else {
-        // console.log('normal')
       }
     }
   }
