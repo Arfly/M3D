@@ -5,19 +5,17 @@
 <script>
 import * as THREE from 'three'
 import * as TrackballControls from '@/controls/TrackballControls'
+import {stats} from '@/utils/stats.js'
 import {mapGetters, mapActions} from 'vuex'
+
+let camera,
+  controls,
+  scene,
+  renderer,
+  container
 
 export default {
   name: 'appMain',
-  data () {
-    return {
-      camera: null,
-      controls: null,
-      scene: null,
-      renderer: null,
-      container: null
-    }
-  },
   computed: {
     ...mapGetters([
       'needUpdate',
@@ -48,17 +46,17 @@ export default {
 
     // var cross
 
-    this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000)
-    this.controls = new THREE.TrackballControls(this.camera)
-    this.controls.staticMoving = false
-    this.scene = new THREE.Scene()
-    this.renderer = new THREE.WebGLRenderer({ antialias: false })
-    this.container = document.getElementById('container')
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 9999999999)
+    controls = new THREE.TrackballControls(camera)
+    controls.staticMoving = false
+    scene = new THREE.Scene()
+    renderer = new THREE.WebGLRenderer({ antialias: false })
+    container = document.getElementById('container')
     // console.log(this.controls)
 
     var grid = new THREE.GridHelper(100, 100, 0x888888, 0x888888)
     grid.position.set(0, 0, 0)
-    this.scene.add(grid)
+    scene.add(grid)
 
     this.init()
     this.animate()
@@ -66,26 +64,26 @@ export default {
   methods: {
     ...mapActions['resetUpdate'],
     init () {
-      console.log(this.camera)
-      this.camera.position.set(10, 10, 10)
+      console.log(camera)
+      camera.position.set(5, 10, 0)
 
-      this.controls = new THREE.TrackballControls(this.camera)
+      controls = new THREE.TrackballControls(camera)
 
-      this.controls.rotateSpeed = 1.0
-      this.controls.zoomSpeed = 1.2
-      this.controls.panSpeed = 0.8
+      controls.rotateSpeed = 1.0
+      controls.zoomSpeed = 1.2
+      controls.panSpeed = 0.8
 
-      this.controls.noZoom = false
-      this.controls.noPan = false
+      controls.noZoom = false
+      controls.noPan = false
 
     //   this.controls.staticMoving = true
-      this.controls.dynamicDampingFactor = 0.3
+      controls.dynamicDampingFactor = 0.3
 
-      this.controls.keys = [ 65, 83, 68 ]
+      controls.keys = [ 65, 83, 68 ]
 
-      this.controls.addEventListener('change', this.render)
+      controls.addEventListener('change', this.render)
 
-      this.scene.background = new THREE.Color(0xcccccc)
+      scene.background = new THREE.Color(0xcccccc)
     //   this.scene.fog = new THREE.FogExp2(0xcccccc, 0.002)
 
     //   var geometry = new THREE.SphereGeometry(31, 100, 100)
@@ -101,12 +99,13 @@ export default {
     //   this.scene.add(mesh)
     //   }	// lights
 
-      var geometry2 = new THREE.CylinderGeometry(5, 5, 20, 32)
-      var material2 = new THREE.MeshBasicMaterial({color: 0xffffff})
-      var cylinder = new THREE.Mesh(geometry2, material2)
+    //   var geometry2 = new THREE.CylinderGeometry(5, 5, 20, 32)
+    //   var material2 = new THREE.MeshBasicMaterial({color: 0xffffff})
+    //   var cylinder = new THREE.Mesh(geometry2, material2)
 
-      cylinder.position.set(0, 0, 0)
-      this.scene.add(cylinder)
+    //   cylinder.position.set(0, 0, 0)
+    //   cylinder.up.set(1, 1, 1)
+    //   scene.add(cylinder)
 
     //   var light = new THREE.AmbientLight(0xffffff)
     //   light.position.set(1, 1, 1)
@@ -116,44 +115,77 @@ export default {
     //   light.position.set(-1, -1, -1)
     //   this.scene.add(light)
 
-    //   var light = new THREE.AmbientLight(0x222222)
-    //   this.scene.add(light)
+      var light = new THREE.AmbientLight(0xffffff)
+      scene.add(light)
 
 	    // renderer
 
-      this.renderer.setPixelRatio(window.devicePixelRatio)
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.setPixelRatio(window.devicePixelRatio)
+      renderer.setSize(window.innerWidth, window.innerHeight)
       console.log(this)
-      this.container.appendChild(this.renderer.domElement)
+      container.appendChild(renderer.domElement)
 
+      container.appendChild(stats.dom)
       window.addEventListener('resize', this.onWindowResize, false)
 
       this.render()
     },
     onWindowResize () {
-      this.camera.aspect = window.innerWidth / window.innerHeight
-      this.camera.updateProjectionMatrix()
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
-      this.controls.handleResize()
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(window.innerWidth, window.innerHeight)
+      controls.handleResize()
       this.render()
     },
     animate () {
       requestAnimationFrame(this.animate)
       this.updateData()
-      this.controls.update()
+      controls.update()
     },
     render () {
-      this.renderer.render(this.scene, this.camera)
+      stats.begin()
+      renderer.render(scene, camera)
+      stats.end()
     //   console.log(this)
     //   console.log(mapActions['resetUpdate'])
     //   stats.update()
     },
     updateData () {
       if (this.needUpdate) {
-        // console.log(this.resetUpdate)
+        console.log('清理场景模型')
+        scene.children.length = 0
+
+        console.log('更新场景模型')
+        this.addNewModel()
+        this.render()
         this.$store.dispatch('resetUpdate')
       }
+    },
+    addNewModel () {
+      let i = 0
+      let atoms = this.file.content
+      let len = atoms.length
+      console.log(atoms)
+      let molecule = new THREE.Object3D()
+        // 小数位数太多会不会有计算精度误差的问题
+      for (i = 0; i < len; i++) {
+        var geometry = new THREE.SphereGeometry(atoms[i].radius / 100, 30, 30)
+        // var geometry = new THREE.SphereGeometry(atoms[i].radius / 100, 30, 30)
+        var material = new THREE.MeshBasicMaterial({ color: '#' + atoms[i].color })
+        var mesh = new THREE.Mesh(geometry, material)
+        mesh.position.set(atoms[i].position.x, atoms[i].position.y, atoms[i].position.z)
+        // console.log(mesh)
+        molecule.add(mesh)
+      }
+      molecule.position.set(0, 10, 0)
+      camera.lookAt(molecule.position)
+      scene.add(molecule)
+
+      var grid = new THREE.GridHelper(100, 100, 0x888888, 0x888888)
+      grid.position.set(0, 0, 0)
+      scene.add(grid)
     }
+
   }
 }
 </script>

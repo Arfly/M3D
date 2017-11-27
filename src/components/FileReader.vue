@@ -1,12 +1,12 @@
 <template>
   <div class="file-reader">
       <div @click="chooseFile" type="primary">open</div>
-      <input type="file" ref="file" @change="readFile" style="display:none">
+      <input type="file" ref="file" @change="loadFile" style="display:none">
   </div>
 </template>
 
 <script>
-import {parse} from '@/utils/Parser'
+import {readFile} from '@/utils/ReadFile'
 
 export default {
   name: 'fileReader',
@@ -16,18 +16,9 @@ export default {
     }
   },
   methods: {
-    readFile () {
+    loadFile () {
       let file = this.$refs.file.files[0]
-      if (!file) {
-        return
-      }
-      console.log(this.$refs)
-      let reader = new FileReader()
-      reader.readAsText(file)
-      reader.onload = function () {
-        // console.log(this.result)
-        parse(this.result)
-      }
+      readFile(file)
     },
     chooseFile () {
       this.$refs.file.click()
