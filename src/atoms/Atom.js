@@ -11,6 +11,7 @@ export class Atom {
     this.color = 'FFFFFF'
     this.radius = 0
     this.neighbors = []
+    this.bonds = []
 
     if (ele && Atoms[ele]) {
       this.atom = ele
@@ -18,10 +19,11 @@ export class Atom {
       this.color = Atoms[ele].color
     }
 
-    if (pos && pos.x && pos.y && pos.z) {
-      this.position.x = pos.x
-      this.position.y = pos.y
-      this.position.z = pos.z
+    if (pos) {
+      this.position.x = pos.x || 0
+      this.position.y = pos.y || 0
+      this.position.z = pos.z || 0
     }
+    console.log(this.position, pos)
   }
 }

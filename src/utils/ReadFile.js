@@ -1,6 +1,7 @@
 import {parse} from '@/utils/Parser'
 
 export function readFile (file) {
+  console.log(file)
   if (!file) {
     return
   }

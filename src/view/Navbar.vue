@@ -12,7 +12,7 @@
             <template slot="title">File</template>
             <el-menu-item index="Aspirin">Aspirin</el-menu-item>
             <el-menu-item index="BlindII">BlindII</el-menu-item>
-            <el-menu-item index="open">
+            <el-menu-item index="open" >
                 <file-reader></file-reader>
             </el-menu-item>
         </el-submenu>
@@ -24,6 +24,9 @@
 <script>
 import fileReader from '@/components/FileReader'
 import { readFile } from '@/utils/ReadFile'
+import { parse } from '@/utils/Parser'
+import * as THREE from 'three'
+let fileLoader = new THREE.FileLoader()
 
 export default {
   name: 'navbar',
@@ -40,10 +43,14 @@ export default {
       console.log(key, keyPath)
       switch (key) {
         case 'Aspirin':
-          
+          fileLoader.load('/static/Aspirin.xyz', function (res) {
+            parse(res)
+          })
           break
         case 'BlindII':
-          readFile()
+          fileLoader.load('/static/blindII.xyz', function (res) {
+            parse(res)
+          })
           break
         case 'open':
           return

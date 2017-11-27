@@ -1,8 +1,10 @@
 import { Atom } from '@/atoms/Atom'
+import { Bond } from '@/atoms/Bond'
 import store from '@/store'
 
 export function parse (fileTxt) {
-  console.log('原始数据', fileTxt)
+  console.log('原始数据')
+  console.log(fileTxt)
 
   if (!fileTxt) {
     return false
@@ -12,8 +14,9 @@ export function parse (fileTxt) {
 
   let i = 0
   let len = atomsArr.length
+  // 第一位原子数目、第二位分子名称需要参数校验
 
-  for (i = 0; i < len; i++) {
+  for (i = 2; i < len; i++) {
     atomsArr[i] = atomsArr[i].replace(/\s+/g, ' ')
     let tmpArr = atomsArr[i].split(' ')
     // console.log(tmpArr)
@@ -22,18 +25,22 @@ export function parse (fileTxt) {
       'y': parseFloat(tmpArr[3]),
       'z': parseFloat(tmpArr[2])
     }
+    // console.log(tmpPos)
     atomsArr[i] = new Atom(tmpArr[0], tmpPos)
+    // console.log(atomsArr[i])
   }
-
+//   console.log(atomsArr)
   let atomsNum = atomsArr.length
-  for (i = 0; i < atomsNum; i++) {
-    for (let j = 0; j < atomsNum; j++) {
+  for (i = 2; i < atomsNum; i++) {
+    for (let j = 2; j < atomsNum; j++) {
       if (j === i) {
         continue
       }
 
-      if (hasBond(atomsArr[i], atomsArr[j])) {
+      if (isBond(atomsArr[i], atomsArr[j])) {
         atomsArr[i].neighbors.push(atomsArr[j])
+        let bond = new Bond(atomsArr[i], atomsArr[j])
+        atomsArr[i].bonds.push(bond)
       }
     }
   }
@@ -55,7 +62,7 @@ function getBondMaxDistance (atom1, atom2) {
   return (atom1.radius / 100 + atom2.radius / 100) * 1.2
 }
 
-function hasBond (atom1, atom2) {
+function isBond (atom1, atom2) {
   let atomDistance = getAtomDistance(atom1.position, atom2.position)
   let maxBondDistance = getBondMaxDistance(atom1, atom2)
   return atomDistance < maxBondDistance

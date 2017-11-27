@@ -7,12 +7,16 @@ import * as THREE from 'three'
 import * as TrackballControls from '@/controls/TrackballControls'
 import {stats} from '@/utils/stats.js'
 import {mapGetters, mapActions} from 'vuex'
+import { parse } from '@/utils/Parser'
 
 let camera,
   controls,
   scene,
   renderer,
-  container
+  container,
+  ambient = new THREE.AmbientLight(0xffffff, 0.1),
+  lightUp = new THREE.DirectionalLight(0xffffff, 1),
+  lightDown = new THREE.DirectionalLight(0xffffff, 1)
 
 export default {
   name: 'appMain',
@@ -65,6 +69,12 @@ export default {
     ...mapActions['resetUpdate'],
     init () {
       console.log(camera)
+      let fileLoader = new THREE.FileLoader()
+      fileLoader.load('/static/Aspirin.xyz', function (res) {
+        console.log(fileLoader, res)
+        parse(res)
+      })
+
       camera.position.set(5, 10, 0)
 
       controls = new THREE.TrackballControls(camera)
@@ -84,41 +94,13 @@ export default {
       controls.addEventListener('change', this.render)
 
       scene.background = new THREE.Color(0xcccccc)
-    //   this.scene.fog = new THREE.FogExp2(0xcccccc, 0.002)
 
-    //   var geometry = new THREE.SphereGeometry(31, 100, 100)
-    //   var material = new THREE.MeshBasicMaterial({ color: 0xffffff })
+      scene.add(ambient)
 
-    //   for (var i = 0; i < 500; i++) {
-    //   var mesh = new THREE.Mesh(geometry, material)
-    //     mesh.position.x = (Math.random() - 0.5) * 1000
-    //     mesh.position.y = (Math.random() - 0.5) * 1000
-    //     mesh.position.z = (Math.random() - 0.5) * 1000
-    //     mesh.updateMatrix()
-    //     mesh.matrixAutoUpdate = false
-    //   this.scene.add(mesh)
-    //   }	// lights
+    // renderer
 
-    //   var geometry2 = new THREE.CylinderGeometry(5, 5, 20, 32)
-    //   var material2 = new THREE.MeshBasicMaterial({color: 0xffffff})
-    //   var cylinder = new THREE.Mesh(geometry2, material2)
-
-    //   cylinder.position.set(0, 0, 0)
-    //   cylinder.up.set(1, 1, 1)
-    //   scene.add(cylinder)
-
-    //   var light = new THREE.AmbientLight(0xffffff)
-    //   light.position.set(1, 1, 1)
-    //   this.scene.add(light)
-
-    //   var light = new THREE.DirectionalLight(0x002288)
-    //   light.position.set(-1, -1, -1)
-    //   this.scene.add(light)
-
-      var light = new THREE.AmbientLight(0xffffff)
-      scene.add(light)
-
-	    // renderer
+      lightUp.position.set(10000, 10000, 10000)
+      lightDown.position.set(-10000, -10000, -10000)
 
       renderer.setPixelRatio(window.devicePixelRatio)
       renderer.setSize(window.innerWidth, window.innerHeight)
@@ -166,26 +148,70 @@ export default {
       let atoms = this.file.content
       let len = atoms.length
       console.log(atoms)
-      let molecule = new THREE.Object3D()
+      let moleculeStructure = new THREE.Object3D()
+      let moleculeModel = new THREE.Object3D()
         // 小数位数太多会不会有计算精度误差的问题
-      for (i = 0; i < len; i++) {
-        var geometry = new THREE.SphereGeometry(atoms[i].radius / 100, 30, 30)
+      for (i = 2; i < len; i++) { // 第一位原子数目，第二位分子名称
+        var geometry = new THREE.SphereGeometry(32 / 100, 30, 30)
         // var geometry = new THREE.SphereGeometry(atoms[i].radius / 100, 30, 30)
-        var material = new THREE.MeshBasicMaterial({ color: '#' + atoms[i].color })
+        var material = new THREE.MeshPhongMaterial({ color: '#' + atoms[i].color })
         var mesh = new THREE.Mesh(geometry, material)
         mesh.position.set(atoms[i].position.x, atoms[i].position.y, atoms[i].position.z)
-        // console.log(mesh)
-        molecule.add(mesh)
-      }
-      molecule.position.set(0, 10, 0)
-      camera.lookAt(molecule.position)
-      scene.add(molecule)
+        mesh.name = atoms[i].atom
+        console.log(mesh)
 
+        geometry = new THREE.SphereGeometry(atoms[i].radius / 100, 30, 30)
+        material = new THREE.MeshBasicMaterial({ color: '#' + atoms[i].color })
+        var meshModel = new THREE.Mesh(geometry, material)
+        meshModel.position.set(atoms[i].position.x, atoms[i].position.y, atoms[i].position.z)
+        meshModel.name = atoms[i].atom
+        console.log(mesh)
+
+        let bondsNum = atoms[i].bonds.length
+        let bonds = atoms[i].bonds
+        for (let j = 0; j < bondsNum; j++) {
+          console.log(bonds[j])
+          var cylinder = new THREE.CylinderGeometry(10 / 100, 10 / 100, bonds[j].length, 20)
+          var cylinderMaterial = new THREE.MeshPhongMaterial({color: '#' + bonds[j].color})
+        //   console.log(bonds[j].color)
+          var bond = new THREE.Mesh(cylinder, cylinderMaterial)
+          var originDir = new THREE.Vector3(0, 1, 0)
+          var dir = new THREE.Vector3(bonds[j].direction.x, bonds[j].direction.y, bonds[j].direction.z)
+          var Raxis = new THREE.Vector3()
+          Raxis.crossVectors(originDir, dir).normalize()
+          var angle = originDir.angleTo(dir)
+          bond.setRotationFromAxisAngle(Raxis, angle)
+          console.log(Raxis, angle)
+          bond.position.set(bonds[j].position.x, bonds[j].position.y, bonds[j].position.z)
+        //   cylinder.up.set(1, 1, 1)
+
+        //   mesh.add(bond)
+          moleculeStructure.add(bond)
+        }
+        moleculeStructure.add(mesh)
+        moleculeModel.add(meshModel)
+      }
+      moleculeStructure.position.set(0, 0, 0)
+      moleculeStructure.name = atoms[1]
+
+      moleculeModel.position.set(0, 0, 0)
+      moleculeModel.name = atoms[1]
+
+      camera.lookAt(moleculeStructure.position)
+      scene.add(moleculeStructure)
+      scene.add(moleculeModel)
+
+      moleculeModel.visible = false
+      console.log(moleculeStructure)
       var grid = new THREE.GridHelper(100, 100, 0x888888, 0x888888)
       grid.position.set(0, 0, 0)
       scene.add(grid)
-    }
+      scene.add(ambient)
 
+      scene.add(lightUp)
+
+      scene.add(lightDown)
+    }
   }
 }
 </script>

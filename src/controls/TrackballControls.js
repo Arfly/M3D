@@ -32,7 +32,7 @@ THREE.TrackballControls = function (object, domElement) {
 
         // internals
 
-  this.target = new THREE.Vector3(0, 10, 0)
+  this.target = new THREE.Vector3(0, 0, 0)
 
 //   this.target = this.object.target.clone()
 
