@@ -1,5 +1,9 @@
 <template>
-    <div id='container' class="app-main" style="min-height: 100%"></div>
+    <div v-loading="this.$store.state.loading" :element-loading-text="this.$store.state.loadingTxt" id='container' class="app-main" style="min-height: 100%">
+        
+  </span>
+</el-dialog>
+    </div>
 </template>
 
 <script>
@@ -16,7 +20,9 @@ let camera,
   container,
   ambient = new THREE.AmbientLight(0xffffff, 0.1),
   lightUp = new THREE.DirectionalLight(0xffffff, 1),
-  lightDown = new THREE.DirectionalLight(0xffffff, 1)
+  lightDown = new THREE.DirectionalLight(0xffffff, 1),
+  moleculeStructure,
+  moleculeModel
 
 export default {
   name: 'appMain',
@@ -24,6 +30,11 @@ export default {
     ...mapGetters([
       'needUpdate',
       'file'])
+  },
+  data () {
+    return {
+      dialogVisible: false
+    }
   },
   mounted () {
     // let scene, camera, pointLight, stats
@@ -68,6 +79,7 @@ export default {
   methods: {
     ...mapActions['resetUpdate'],
     init () {
+      this.$store.dispatch('loading')
       console.log(camera)
       let fileLoader = new THREE.FileLoader()
       fileLoader.load('/static/Aspirin.xyz', function (res) {
@@ -136,11 +148,19 @@ export default {
       if (this.needUpdate) {
         console.log('清理场景模型')
         scene.children.length = 0
-
+        this.$store.dispatch('startRender')
         console.log('更新场景模型')
         this.addNewModel()
         this.render()
         this.$store.dispatch('resetUpdate')
+        this.$store.dispatch('loaded')
+      }
+
+      if (this.$store.state.updateVisibleInfo) {
+        moleculeStructure.visible = this.$store.state.structureShow
+        moleculeModel.visible = this.$store.state.modelShow
+        this.$store.dispatch('resetVisibleState')
+        this.render()
       }
     },
     addNewModel () {
@@ -148,8 +168,8 @@ export default {
       let atoms = this.file.content
       let len = atoms.length
       console.log(atoms)
-      let moleculeStructure = new THREE.Object3D()
-      let moleculeModel = new THREE.Object3D()
+      moleculeStructure = new THREE.Object3D()
+      moleculeModel = new THREE.Object3D()
         // 小数位数太多会不会有计算精度误差的问题
       for (i = 2; i < len; i++) { // 第一位原子数目，第二位分子名称
         var geometry = new THREE.SphereGeometry(32 / 100, 30, 30)
@@ -161,7 +181,7 @@ export default {
         console.log(mesh)
 
         geometry = new THREE.SphereGeometry(atoms[i].radius / 100, 30, 30)
-        material = new THREE.MeshBasicMaterial({ color: '#' + atoms[i].color })
+        material = new THREE.MeshPhongMaterial({ color: '#' + atoms[i].color })
         var meshModel = new THREE.Mesh(geometry, material)
         meshModel.position.set(atoms[i].position.x, atoms[i].position.y, atoms[i].position.z)
         meshModel.name = atoms[i].atom
@@ -201,7 +221,8 @@ export default {
       scene.add(moleculeStructure)
       scene.add(moleculeModel)
 
-      moleculeModel.visible = false
+      moleculeModel.visible = this.$store.state.modelShow
+      moleculeStructure.visible = this.$store.state.structureShow
       console.log(moleculeStructure)
       var grid = new THREE.GridHelper(100, 100, 0x888888, 0x888888)
       grid.position.set(0, 0, 0)

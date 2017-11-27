@@ -1,11 +1,12 @@
 import { Atom } from '@/atoms/Atom'
 import { Bond } from '@/atoms/Bond'
 import store from '@/store'
+import { Atoms } from '@/atoms/atom.config'
 
 export function parse (fileTxt) {
   console.log('原始数据')
   console.log(fileTxt)
-
+  store.dispatch('startParse')
   if (!fileTxt) {
     return false
   }
@@ -15,6 +16,7 @@ export function parse (fileTxt) {
   let i = 0
   let len = atomsArr.length
   // 第一位原子数目、第二位分子名称需要参数校验
+  let elesArr = []
 
   for (i = 2; i < len; i++) {
     atomsArr[i] = atomsArr[i].replace(/\s+/g, ' ')
@@ -27,9 +29,22 @@ export function parse (fileTxt) {
     }
     // console.log(tmpPos)
     atomsArr[i] = new Atom(tmpArr[0], tmpPos)
+    if (elesArr.indexOf(atomsArr[i].atom) === -1) {
+      elesArr.push(atomsArr[i].atom)
+    }
     // console.log(atomsArr[i])
   }
-//   console.log(atomsArr)
+  
+  let eleKindsLen = elesArr.length
+  for (i = 0; i < eleKindsLen; i++) {
+    let name = elesArr[i]
+    elesArr[i] = {
+      atom: name,
+      radius: Atoms[name].radius,
+      color: Atoms[name].color
+    }
+  }
+  console.log(elesArr)
   let atomsNum = atomsArr.length
   for (i = 2; i < atomsNum; i++) {
     for (let j = 2; j < atomsNum; j++) {
@@ -47,7 +62,9 @@ export function parse (fileTxt) {
 
   console.log('文件数据解析成功', atomsArr)
 //   console.log(store)
+  store.dispatch('endParse')
   store.dispatch('updateMoleculeData', atomsArr)
+  store.dispatch('updateElementsData', elesArr)
 }
 
 function getAtomDistance (pos1, pos2) {

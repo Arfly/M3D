@@ -1,4 +1,5 @@
 import {parse} from '@/utils/Parser'
+import store from '@/store'
 
 export function readFile (file) {
   console.log(file)
@@ -8,7 +9,9 @@ export function readFile (file) {
 
   let reader = new FileReader()
   reader.readAsText(file)
+  store.dispatch('loadingFile')
   reader.onload = function () {
+    store.dispatch('fileLoaded')
     parse(this.result)
   }
 }
