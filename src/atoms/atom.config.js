@@ -5,19 +5,19 @@ export const Atoms = {
   },
   'He': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'D9FFFF'
   },
   'Li': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'CC80FF'
   },
   'Be': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'C2FF00'
   },
   'B': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FFB5B5'
   },
   'C': {
     'radius': 76,
@@ -33,35 +33,35 @@ export const Atoms = {
   },
   'F': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '90E050'
   },
   'Ne': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'B3E3F5'
   },
   'Na': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'AB5CF2'
   },
   'Mg': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '8AFF00'
   },
   'Al': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'BFA6A6'
   },
   'Si': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'F0C8A0'
   },
   'P': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FF8000'
   },
   'S': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FFFF30'
   },
   'Cl': {
     'radius': 102,
@@ -69,370 +69,370 @@ export const Atoms = {
   },
   'Ar': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '80D1E3'
   },
   'K': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '8F40D4'
   },
   'Ca': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '3DFF00'
   },
   'Sc': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'E6E6E6'
   },
   'Ti': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'BFC2C7'
   },
   'V': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'A6A6AB'
   },
   'Cr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '8A99C7'
   },
   'Mn': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '9C7AC7'
   },
   'Fe': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'E06633'
   },
   'Co': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'F090A0'
   },
   'Ni': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '50D050'
   },
   'Cu': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'C88033'
   },
   'Zn': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '7D80B0'
   },
   'Ga': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'C28F8F'
   },
   'Ge': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '668F8F'
   },
   'As': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'BD80E3'
   },
   'Se': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FFA100'
   },
   'Br': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'A62929'
   },
   'Kr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '5CB8D1'
   },
   'Rb': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '702EB0'
   },
   'Sr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00FF00'
   },
   'Y': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '94FFFF'
   },
   'Zr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '94E0E0'
   },
   'Nb': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '73C2C9'
   },
   'Mo': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '54B5B5'
   },
   'Tc': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '3B9E9E'
   },
   'Ru': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '248F8F'
   },
   'Rh': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '0A7D8C'
   },
   'Pd': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '006985'
   },
   'Ag': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'C0C0C0'
   },
   'Cd': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FFD98F'
   },
   'In': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'A67573'
   },
   'Sn': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '668080'
   },
   'Sb': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '9E63B5'
   },
   'Te': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'D47A00'
   },
   'I': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '940094'
   },
   'Xe': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '429EB0'
   },
   'Cs': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '57178F'
   },
   'Ba': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00C900'
   },
   'La': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '70D4FF'
   },
   'Ce': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FFFFC7'
   },
   'Pr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'D9FFC7'
   },
   'Nd': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'C7FFC7'
   },
   'Pm': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'A3FFC7'
   },
   'Sm': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '8FFFC7'
   },
   'Eu': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '61FFC7'
   },
   'Gd': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '45FFC7'
   },
   'Tb': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '30FFC7'
   },
   'Dy': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '1FFFC7'
   },
   'Ho': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00FF9C'
   },
   'Er': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00E675'
   },
   'Tm': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00D452'
   },
   'Yb': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00BF38'
   },
   'Lu': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00AB24'
   },
   'Hf': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '4DC2FF'
   },
   'Ta': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '4DA6FF'
   },
   'W': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '2194D6'
   },
   'Re': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '267DAB'
   },
   'Os': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '266696'
   },
   'Ir': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '175487'
   },
   'Pt': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'D0D0E0'
   },
   'Au': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'FFD123'
   },
   'Hg': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'B8B8D0'
   },
   'Tl': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'A6544D'
   },
   'Pb': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '575961'
   },
   'Bi': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '9E4FB5'
   },
   'Po': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'AB5C00'
   },
   'At': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '754F45'
   },
   'Rn': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '428296'
   },
   'Fr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '420066'
   },
   'Ra': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '007D00'
   },
   'Ac': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '70ABFA'
   },
   'Th': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00BAFF'
   },
   'Pa': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '00A1FF'
   },
   'U': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '008FFF'
   },
   'Np': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '0080FF'
   },
   'Pu': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '006BFF'
   },
   'Am': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '545CF2'
   },
   'Cm': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '785CE3'
   },
   'Bk': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': '8A4FE3'
   },
   'Cf': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'A136D4'
   },
   'Es': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'B31FD4'
   },
   'Fm': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'B31FBA'
   },
   'Md': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'B30DA6'
   },
   'No': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'BD0D87'
   },
   'Lr': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'C70066'
   },
   'Rf': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'CC0059'
   },
   'Db': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'D1004F'
   },
   'Sg': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'D90045'
   },
   'Bh': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'E00038'
   },
   'Hs': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'E6002E'
   },
   'Mt': {
     'radius': 31,
-    'color': 'FFFFFF'
+    'color': 'EB0026'
   }
 }
