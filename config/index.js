@@ -54,8 +54,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: 'https://arfly.github.io/M3D/static',
+    assetsPublicPath: 'https://arfly.github.io/M3D',
 
     /**
      * Source Maps
